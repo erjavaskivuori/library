@@ -1,6 +1,8 @@
+-- @conn PGSQL
+
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username TEXT,
+    username TEXT UNIQUE,
     password TEXT,
     role INTEGER
 );
@@ -10,7 +12,8 @@ CREATE TABLE books (
     name TEXT,
     author TEXT,
     year INTEGER,
-    genre TEXT
+    genre TEXT,
+    visible BOOLEAN
 );
 
 CREATE TABLE loans (
