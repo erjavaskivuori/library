@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Etusivu</h2>
+
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<p>Et ole kirjautunut.</p><a href="/login">Kirjaudu sisään</a>
+
+{% endif %}
+
+<p>Kirjastossa olevat kirjat: </p>
+
+{% for book in books %}
+<a href="/book/{{ book.id }}">{{ book.name }}, {{ book.author }}</a>
+{% endfor %}
+
+{% if session.user_role == 1 %}
+<h4>Kirjastonhoitajan toiminnot</h4>
+<ul>
+    <li> <a href="/add">Lisää uusi kirja</a>
+</ul>
+
+{% endif %}
+{% endblock %}
