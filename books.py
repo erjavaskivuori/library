@@ -5,7 +5,7 @@ def get_all_books():
              WHERE visible = True"""
     return db.session.execute(sql).fetchall()
 
-def get_book_info(book_id):
+def get_book_details(book_id):
     sql = """SELECT id, name, author, year, genre FROM books 
              WHERE book_id=:book_id"""
     return db.session.execute(sql, {"book_id":book_id}).fetchone()
