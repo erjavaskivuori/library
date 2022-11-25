@@ -12,12 +12,12 @@
 <input type="text" author="author" minlength="1"></p>
 
 <p>Kirjan julkaisuvuosi:<br>
-<input type="number" year="year" minlength="4"></p>
+<input type="number" year="year" min="1600" max="2023" step="1"></p>
 
 <p>Kirjan genre:<br>
 <input type="text" genre="genre" minlength="1"></p>
 
-<input type="submit" value="Lähetä">
+<input type="submit" value="Lisää kirja">
 
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
