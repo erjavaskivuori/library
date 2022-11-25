@@ -80,7 +80,7 @@ def add_book():
         if year == "" or len(year) != 4:
             return render_template("error.html", error="Kirjoita julkaisuvuosi muodossa VVVV")
 
-        genre = request.form["year"]
+        genre = request.form["genre"]
         if genre == "":
             return render_template("error.html", error="Genre on tyhjä")
 
