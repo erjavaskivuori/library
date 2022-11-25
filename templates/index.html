@@ -12,9 +12,10 @@
 {% endif %}
 
 <p>Kirjastossa olevat kirjat: </p>
-
+<p>
 {% for book in books %}
-<a href="/book/{{ book.id }}">{{ book.name }}, {{ book.author }}</a>
+<a href="/book/{{ book.id }}">{{ book.name }}, {{ book.author }}<br></a>
+</p>
 {% endfor %}
 
 {% if session.user_role == 1 %}
