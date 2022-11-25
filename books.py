@@ -2,7 +2,7 @@ from db import db
 
 def get_all_books():
     sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible = True"""
+             WHERE visible=TRUE"""
     return db.session.execute(sql).fetchall()
 
 def get_book_details(book_id):
@@ -37,9 +37,9 @@ def search_books_by_genre(genre):
 
 def add_book(name, author, year, genre):
     sql = """INSERT INTO books (name, author, year, genre, visible) 
-            VALUES (:name, :author, :year, :genre, :visible)"""
+            VALUES (:name, :author, :year, :genre, TRUE)"""
     book = db.session.execute(sql, {"name":name, "author":author, +
-            "year":year, "genre":genre, "visible":True}).fetchone()
+            "year":year, "genre":genre}).fetchone()
     book_id = book[0]
     db.session.commit()
 
