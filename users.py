@@ -21,20 +21,20 @@ def login(username, password):
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
 
-    if not user:
+    if user == "":
         return False
-    if not check_password_hash(user[1], password):
+    if not check_password_hash(user[2], password):
         return False
 
     session["user_id"] = user[0]
-    session["user_name"] = username
-    session["user_role"] = user[2]
+    session["username"] = username
+    session["user_role"] = user[3]
     session["csrf_token"] = secrets.token_hex(16)
     return True
     
 def logout():
     del session["user_id"]
-    del session["user_name"]
+    del session["username"]
     del session["user_role"]
 
 def require_role(role):
