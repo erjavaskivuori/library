@@ -10,16 +10,17 @@
 <p>Et ole kirjautunut.</p><a href="/login">Kirjaudu sisään</a>
 
 {% endif %}
+<br>
 
-<p>Kirjastossa olevat kirjat: </p>
+<h3>Kirjastossa olevat kirjat: </h3>
 <p>
 {% for book in books %}
-<a href="/book/{{ book.id }}">{{ book.name }}, {{ book.author }}<br></a>
+<a href="/book/{{ book.id }}"><i>{{ book.name }}</i>, {{ book.author }}<br></a>
 </p>
 {% endfor %}
-
+<br>
 {% if session.user_role == 1 %}
-<h4>Kirjastonhoitajan toiminnot</h4>
+<h3>Kirjastonhoitajan toiminnot</h3>
 <ul>
     <li> <a href="/add">Lisää uusi kirja</a>
 </ul>
