@@ -51,11 +51,11 @@ def register():
             return render_template("error.html", error="Rekisteröinti epäonnistui")
 
 
-@app.route("/book{<int:book_id>}")
+@app.route("/book/<int:book_id>")
 def show_book(book_id):
-    details = books.get_book_details(book_id)
+    details = books.get_book_details(int(book_id))
 
-    return render_template("book.html", id=book_id, name=details[1], 
+    return render_template("book.html", name=details[1], 
     author=details[2], year=details[3], genre=details[4])
 
 @app.route("/add", methods=["GET", "POST"])
