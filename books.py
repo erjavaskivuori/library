@@ -2,7 +2,7 @@ from db import db
 
 def get_all_books():
     sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible=TRUE"""
+             WHERE visible='TRUE'"""
     return db.session.execute(sql).fetchall()
 
 def get_book_details(book_id):
@@ -17,28 +17,28 @@ def order_books(order):
 
 def search_books_by_name(name):
     sql = """SELECT id, name, author, year, genre FROM books 
-             WHERE visible = True AND name LIKE :name"""    
+             WHERE visible = 'True' AND name LIKE :name"""    
     return db.session.execute(sql, {"name":"%"+name+"%"}).fetchall()
 
 def search_books_by_author(author):
     sql = """SELECT id, name, author, year, genre FROM books 
-             WHERE visible = True AND author LIKE :author"""
+             WHERE visible = 'True' AND author LIKE :author"""
     return db.session.execute(sql, {"author":"%"+author+"%"}).fetchall()
 
 def search_books_by_year(year):
     sql = """SELECT id, name, author, year, genre FROM books 
-             WHERE visible = True AND year=:year"""
+             WHERE visible = 'True' AND year=:year"""
     return db.session.execute(sql, {"year":year}).fetchall()
 
 def search_books_by_genre(genre):
     sql = """SELECT id, name, author, year, genre FROM books 
-             WHERE visible = True AND genre=:genre"""
+             WHERE visible = 'True' AND genre=:genre"""
     return db.session.execute(sql, {"genre":genre}).fetchall()
 
 def add_book(name, author, year, genre):
     sql = """INSERT INTO books (name, author, year, genre, visible) 
-            VALUES (:name, :author, :year, :genre, TRUE)"""
-    book = db.session.execute(sql, {"name":name, "author":author, +
+            VALUES (:name, :author, :year, :genre, 'TRUE')"""
+    book = db.session.execute(sql, {"name":name, "author":author,
             "year":year, "genre":genre}).fetchone()
     book_id = book[0]
     db.session.commit()
@@ -51,4 +51,3 @@ def remove_book(id):
     db.session.commit()
 
     return True
-
