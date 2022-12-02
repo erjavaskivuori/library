@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Toivo uutta kirjaa</h2>
+
+<form action="/bookwish" method="post">
+
+<p>Kirjan nimi:<br>
+<input type="text" name="name" minlength="1"></p>
+
+<p>Kirjailijan nimi:<br>
+<input type="text" author="author" minlength="1"></p>
+
+<input type="submit" value="Toivo kirjaa">
+
+</form>
+
+<p>
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}
