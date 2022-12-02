@@ -21,7 +21,7 @@ def login(username, password):
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()
 
-    if user == "":
+    if user is None:
         return False
     if not check_password_hash(user[2], password):
         return False
@@ -37,8 +37,11 @@ def logout():
     del session["username"]
     del session["user_role"]
 
+def get_current_user():
+    return session["user_id"]
+
 def require_role(role):
-    if role > session.get("user_role", 0):
+    if role != session["user_role"]:
         abort(403)
 
 def check_csrf():
