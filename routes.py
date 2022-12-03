@@ -184,3 +184,15 @@ def borrow_book():
         return redirect(f"/book/{str(book_id)}")
     else:
         return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+@app.route("/return", methods=["POST"])
+def return_book():
+    users.require_role(0)
+    users.check_csrf()
+
+    book_id = request.form["book_id"]
+
+    if books.return_book(int(book_id)):
+        return redirect(f"/book/{str(book_id)}")
+    else:
+        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
