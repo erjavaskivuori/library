@@ -146,3 +146,23 @@ def search_book():
 
         return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
 
+@app.route("/review", methods=["POST"])
+def give_review():
+    users.check_csrf()
+
+    book_id = request.form["book_id"]
+
+    score = int(request.form["score"])
+    if score < 1 or score > 5:
+        return render_template("error.html", error="Tuntematon pistemäärä. Valitse 1-5.")
+
+    comment = request.form["comment"]
+    if len(comment) < 1:
+        return render_template("error.html", error="Anna kommentti")
+    if len(comment) > 1000:
+        return render_template("error.html", error="Antamasi kommentti on liian pitkä.")
+
+    if books.add_review(int(book_id), users.get_current_user(), score, comment):
+        return redirect(f"/book/{str(book_id)}")
+    else:
+        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
