@@ -53,3 +53,16 @@ def remove_book(id):
     db.session.commit()
 
     return True
+
+def wish_for_book(user_id, name, author):
+    sql = """INSERT INTO wishlist (user_id, name, author)
+            VALUES (:user_id, :name, :author)"""
+    db.session.execute(sql, {"user_id":user_id, "name":name, "author":author})
+    db.session.commit()
+
+    return True
+
+def get_wishes():
+    sql = """SELECT username, name, author FROM users INNER JOIN wishlist
+            ON users.id=user_id"""
+    return db.session.execute(sql).fetchall()
