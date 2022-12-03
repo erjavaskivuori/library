@@ -2,16 +2,26 @@
 
 Ideanani on luoda tietokantasovellus kirjaston käyttämiseen ja hallintaan. 
 
-Sille on ensimmäisessä vaiheessa toteutettu seuraavia toiminnallisuuksia:
+Tähän mennessä on toteutettu seuraavat toiminallisuudet:
 
-- Käyttäjä voi kirjautua sisään ja ulos sekä luoda uuden tunnuksen
-- Käyttäjä voi katsella kirjojen tietoja
-- Kirjaston työntekijä voi lisätä kirjoja
+Kuka tahansa sivulla voi:
+- Nähdä kaikki kirjastossa olevat kirjat
+- Nähdä kirjan oman sivun, jossa on tarkempia tietoja kirjasta sekä sille annetut arvostelut
+- Hakea kirjoja teoksen nimen, kirjailijan, kategorian tai julkaisuvuoden perusteella
+- Luoda uuden tunnuksen
 
-Jatkossa tavoitteena on toteuttaa myös:
+Käyttäjä voi:
+- Kirjautua sisään ja ulos
+- Lainata ja palauttaa kirjoja
+- Antaa arvosteluja kirjoille
+- Toivoa uusia kirjoja
 
-- Käyttäjä voi etsiä kirjoja esim. teoksen nimen, kirjailijan, kategorian tai julkaisuvuoden perusteella
-- Käyttäjä voi lainata ja palauttaa kirjoja
-- Käyttäjä voi antaa arvosteluja kirjoille
-- Käyttäjä voi toivoa uusia kirjoja
-- Kirjaston työntekijä voi nähdä lainassa olevat kirjat ja niiden lainaajat
+Kirjaston työntekijä voi:
+- Antaa arvosteluja kirjoille
+- Lisätä ja poistaa kirjoja
+- Nähdä kirjatoiveet ja toiveen esittäjän käyttäjänimen
+- Nähdä lainassa olevat kirjat ja lainaajan käyttäjänimen
+
+Jatkossa on tarkoitus toteuttaa vielä:
+- Paremman ulkoasun kehittäminen
+- Testaaminen tuotannossa
