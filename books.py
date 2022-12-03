@@ -2,7 +2,7 @@ from db import db
 
 def get_all_books():
     sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible='TRUE'"""
+             WHERE visible='True'"""
     return db.session.execute(sql).fetchall()
 
 def get_book_details(book_id):
@@ -12,7 +12,7 @@ def get_book_details(book_id):
 
 def order_books(order):
     sql = """SELECT id, name, author, year, genre FROM books 
-             ORDER BY %s"""
+             WHERE visible='True' ORDER BY %s"""
     return db.session.execute(sql, {order}).fetchall()
 
 def search_books_by_name(name):
@@ -36,17 +36,19 @@ def search_books_by_genre(genre):
     return db.session.execute(sql, {"genre":genre}).fetchall()
 
 def add_book(name, author, year, genre):
-    sql = """INSERT INTO books (name, author, year, genre, visible) 
-            VALUES (:name, :author, :year, :genre, 'TRUE')"""
-    book = db.session.execute(sql, {"name":name, "author":author,
-            "year":year, "genre":genre}).fetchone()
-    book_id = book[0]
-    db.session.commit()
 
-    return book_id
+    try:
+        sql = """INSERT INTO books (name, author, year, genre, visible) 
+                VALUES (:name, :author, :year, :genre, 'True')"""
+        db.session.execute(sql, {"name":name, "author":author,
+                "year":year, "genre":genre})
+        db.session.commit()
+    except:
+        return False
+    return True
 
 def remove_book(id):
-    sql = """UPDATE books SET visible=FALSE WHERE id=:id"""
+    sql = """UPDATE books SET visible='FALSE' WHERE id=:id"""
     db.session.execute(sql, {"id":id})
     db.session.commit()
 
