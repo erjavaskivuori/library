@@ -117,3 +117,32 @@ def wish_for_book():
             return "<p>Toive tallennettu! </p><a href='/'>Palaa etusivulle</a>"
         else:
             return render_template("error.html", error="Jokin meni pieleen")
+
+@app.route("/search", methods=["GET", "POST"])
+def search_book():
+    # needs to be updated so that the letter case doesn't matter
+    if request.method == "GET":
+            return render_template("search.html")
+
+    if request.method == "POST":
+
+        search_type = request.form["search_type"]
+        if search_type == "0":
+            query = request.form["query"]
+            results = books.search_books_by_name(query)
+            return render_template("result.html", results=results)
+        if search_type == "1":
+            query = request.form["query"]
+            results = books.search_books_by_author(query)
+            return render_template("result.html", results=results)
+        if search_type == "2":
+            query = request.form["query"]
+            results = books.search_books_by_year(query)
+            return render_template("result.html", results=results)
+        if search_type == "3":
+            query = request.form["query"]
+            results = books.search_books_by_genre(query)
+            return render_template("result.html", results=results)
+
+        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
