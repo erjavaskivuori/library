@@ -26,7 +26,7 @@ CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     book_id INTEGER REFERENCES books,
     user_id INTEGER REFERENCES users,
-    stars INTEGER,
+    score INTEGER,
     comment TEXT
 );
 
