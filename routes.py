@@ -196,3 +196,8 @@ def return_book():
         return redirect(f"/book/{str(book_id)}")
     else:
         return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+@app.route("/loans")
+def show_loans():
+    users.require_role(1)
+    return render_template("loans.html", loans=books.get_all_loans())
