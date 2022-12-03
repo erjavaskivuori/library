@@ -66,3 +66,19 @@ def get_wishes():
     sql = """SELECT username, name, author FROM users INNER JOIN wishlist
             ON users.id=user_id"""
     return db.session.execute(sql).fetchall()
+
+def add_review(book_id, user_id, score, comment):
+    try:
+        sql = """INSERT INTO reviews (book_id, user_id, score, comment) 
+                 VALUES (:book_id, :user_id, :score, :comment)"""
+        db.session.execute(sql, {"book_id":book_id, "user_id":user_id,
+                         "score":score, "comment":comment})
+        db.session.commit()
+        return True
+    except:
+        return False
+
+def get_reviews(book_id):
+    sql = """SELECT username, score, comment FROM users INNER JOIN reviews
+            ON users.id=user_id AND book_id=:book_id"""
+    return db.session.execute(sql, {"book_id":book_id}).fetchall()
