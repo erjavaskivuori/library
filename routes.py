@@ -171,3 +171,16 @@ def give_review():
 def show_book_wishes():
     users.require_role(1)
     return render_template("book_wishes.html", wishes = books.get_wishes())
+
+@app.route("/borrow", methods=["POST"])
+def borrow_book():
+    users.require_role(0)
+    users.check_csrf()
+
+    book_id = request.form["book_id"]
+    date = datetime.date.today()
+
+    if books.borrow_book(int(book_id), users.get_current_user(), str(date)):
+        return redirect(f"/book/{str(book_id)}")
+    else:
+        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
