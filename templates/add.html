@@ -6,16 +6,16 @@
 <form action="/add" method="post">
 
 <p>Kirjan nimi:<br>
-<input type="text" name="name" minlength="1"></p>
+<input type="text" name="name" minlength="1" maxlength="50"></p>
 
 <p>Kirjailijan nimi:<br>
-<input type="text" author="author" minlength="1"></p>
+<input type="text" name="author" minlength="1" maxlength="50"></p>
 
 <p>Kirjan julkaisuvuosi:<br>
-<input type="number" year="year" min="1600" max="2023" step="1"></p>
+<input type="text" name="year" minlength="4" maxlength="4"></p>
 
 <p>Kirjan genre:<br>
-<input type="text" genre="genre" minlength="1"></p>
+<input type="text" name="genre" minlength="1"></p>
 
 <input type="submit" value="Lisää kirja">
 
@@ -24,6 +24,6 @@
 </form>
 
 <p>
-<a href="/">Palaa etusivulle</a>
+<a href="/">Palaa etusivulle</a></p>
 
 {% endblock %}
