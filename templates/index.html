@@ -13,16 +13,30 @@
 <br>
 
 <h3>Kirjastossa olevat kirjat: </h3>
+<a href="/search">Etsi kirjaa</a>
 <p>
+<br>
 {% for book in books %}
 <a href="/book/{{ book.id }}"><i>{{ book.name }}</i>, {{ book.author }}<br></a>
 </p>
 {% endfor %}
+
+<br>
+{% if session.user_role == 0 %}
+<h3>Käyttäjän toiminnot</h3>
+<ul>
+    <li> <a href="/bookwish">Toivo uutta kirjaa</a>
+</ul>
+
+{% endif %}
+
 <br>
 {% if session.user_role == 1 %}
 <h3>Kirjastonhoitajan toiminnot</h3>
 <ul>
     <li> <a href="/add">Lisää uusi kirja</a>
+    <li> <a href="/book-wishes">Katsele kirjatoiveita</a>
+    <li> <a href="/loans">Katsele lainassa olevia kirjoja</a>
 </ul>
 
 {% endif %}
