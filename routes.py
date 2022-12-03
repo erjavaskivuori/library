@@ -95,3 +95,25 @@ def remove_book():
         return "<p>Kirjan poistaminen onnistui. </p><a href='/'>Palaa etusivulle</a>"
     else:
         return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+@app.route("/bookwish", methods=["GET", "POST"])
+def wish_for_book():
+    users.require_role(0)
+
+    if request.method == "GET":
+        return render_template("bookwish.html")
+
+    if request.method == "POST":
+        users.check_csrf()
+
+        name = request.form["name"]
+        if name == "":
+            return render_template("error.html", error="Nimi on tyhjä")
+        author = request.form["author"]
+        if author == "":
+            return render_template("error.html", error="Nimi on tyhjä")
+
+        if books.wish_for_book(users.get_current_user(), name, author):
+            return "<p>Toive tallennettu! </p><a href='/'>Palaa etusivulle</a>"
+        else:
+            return render_template("error.html", error="Jokin meni pieleen")
