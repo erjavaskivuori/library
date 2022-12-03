@@ -79,9 +79,19 @@ def add_book():
         author = request.form["author"]
         year = request.form["year"]
         genre = request.form["genre"]
-        
+
         if books.add_book(name, author, int(year), genre):
             return redirect("/")
         else:
             return render_template("error.html", error="Jokin meni pieleen")
 
+@app.route("/remove", methods=["POST"])
+def remove_book():
+    users.require_role(1)
+    users.check_csrf()
+    book_id = request.form["book_id"]
+
+    if books.remove_book(int(book_id)):
+        return "<p>Kirjan poistaminen onnistui. </p><a href='/'>Palaa etusivulle</a>"
+    else:
+        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
