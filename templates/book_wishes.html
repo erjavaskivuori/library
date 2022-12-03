@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Kaikki kirjatoiveet: </h3>
+<p>
+{% for wish in wishes %}
+Toive: {{  wish[1]  }}, {{  wish[2]  }}<br>
+Kirjaa on toivonut: {{  wish[0]  }}<br>
+</p>
+{% endfor %}
+
+<br>
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

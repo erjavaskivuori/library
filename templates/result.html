@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h3>Hakutulokset: </h3>
+<p>
+{% for book in results %}
+<a href="/book/{{ book.id }}"><i>{{ book.name }}</i>, {{ book.author }}<br></a>
+</p>
+{% endfor %}
+
+<br>
+<p><a href="/search">Tee uusi haku</a></p>
+<br>
+<a href="/">Palaa etusivulle</a>
+
+{% endblock %}

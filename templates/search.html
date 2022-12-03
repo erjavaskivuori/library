@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Hae kirjaa</h2>
+
+<form action="/search" method="post">
+
+<p>Valitse hakuperuste:<br>
+<select name="search_type">
+<option value=0> Kirjan nimi
+<option value=1> Kirjailijan nimi
+<option value=2> Julkaisuvuosi
+<option value=3> Genre
+</select>
+<input type="text" name="query" maxlength="30"></p>
+<p>
+<input type="submit" value="Hae">
+</form>
+
+<p><a href="/">Palaa etusivulle</a></p>
+
+{% endblock %}
