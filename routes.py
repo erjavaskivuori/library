@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template, redirect, request
+import datetime
 import users, books
 
 @app.route("/")
@@ -31,16 +32,12 @@ def register():
 
     if request.method == "POST":
         username = request.form["username"]
-        if len(username) < 3 or len(username) > 20:
-            return render_template("error.html", error="Käyttäjätunnuksen tulee olla 3-20 merkkiä")
-
+        
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
             return render_template("error.html", error="Salasanat eroavat")
-        if len(password1) < 3 or password1 == "":
-            return render_template("error.html", error="Salasanan tulee sisältää 3-20 merkkiä")
-
+        
         role = request.form["role"]
         if role not in ("0", "1"):
             return render_template("error.html", error="Tuntematon käyttäjärooli")
@@ -55,8 +52,18 @@ def register():
 def show_book(book_id):
     details = books.get_book_details(int(book_id))
 
-    return render_template("book.html", name=details[1], 
-    author=details[2], year=details[3], genre=details[4])
+    loan_info = books.get_loans_info(int(book_id))
+
+    if loan_info is None:
+        borrowable = True
+    else:
+        borrowable = False
+
+    reviews = books.get_reviews(int(book_id))
+
+    return render_template("book.html", id=details[0], name=details[1], 
+    author=details[2], year=details[3], genre=details[4], loan_info=loan_info,
+    borrowable=borrowable, reviews=reviews)
 
 @app.route("/add", methods=["GET", "POST"])
 def add_book():
@@ -69,22 +76,12 @@ def add_book():
         users.check_csrf()
 
         name = request.form["name"]
-        if name == "":
-                return render_template("error.html", error="Nimi on tyhjä")
-
         author = request.form["author"]
-        if author == "":
-            return render_template("error.html", error="Nimi on tyhjä")
-
         year = request.form["year"]
-        if year == "" or len(year) != 4:
-            return render_template("error.html", error="Kirjoita julkaisuvuosi muodossa VVVV")
-
         genre = request.form["genre"]
-        if genre == "":
-            return render_template("error.html", error="Genre on tyhjä")
+        
+        if books.add_book(name, author, int(year), genre):
+            return redirect("/")
+        else:
+            return render_template("error.html", error="Jokin meni pieleen")
 
-        book_id = books.add_book(name, author, year, genre)
-        return redirect("/book/"+str(book_id))
-
-#toimintoja lisätään
