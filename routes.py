@@ -166,3 +166,8 @@ def give_review():
         return redirect(f"/book/{str(book_id)}")
     else:
         return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+@app.route("/book-wishes")
+def show_book_wishes():
+    users.require_role(1)
+    return render_template("book_wishes.html", wishes = books.get_wishes())
