@@ -1,0 +1,132 @@
+  body {
+    margin: auto;
+    max-width: 45em;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 15px;
+    color: whitesmoke;
+    background-color: #45466b;
+    line-height: 20px;
+  }
+
+  body a {
+    color: whitesmoke;
+    text-decoration: none;
+  }
+
+  .center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .center-txt {
+    text-align: center;
+  }
+
+  nav li {
+    display: inline-block;
+    background-color: #FFD7DE;
+    padding: .5em 1em;
+    border-radius: 1em;
+    margin: .5em;
+  }
+
+  nav ul {
+    padding: 0;
+    margin: .5em;
+    text-align:center;
+  }
+
+  nav li a {
+    text-decoration: none;
+    color: #3a2653;
+  }
+
+  nav li :hover, .dropdown:hover .dropbtn,
+  .dropdown-content a:hover{
+    font-weight: bold;
+  }
+
+  .dropdown .dropbtn {
+    background-color: #FFD7DE;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-size: 15px;
+    color: #3a2653;
+    border: none;
+    outline: none;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #FFD7DE;
+    min-width: 1em;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 0;
+    border-radius: .5em;
+  }
+  
+  .dropdown-content a {
+    float: none;
+    padding: .5em 1em;
+    font-weight: normal;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+    float: left;
+  }
+
+  .books {
+    text-align: center;
+  }
+
+  .books a {
+    display: inline-block;
+    padding: .5em 5em;
+    border-radius: .5em;
+    margin: .2em;
+    border-style: double;
+    border-color: whitesmoke;
+    text-decoration: none;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .books a:hover {
+    font-weight: bold;
+  }
+
+  form input, select, textarea {
+    padding: .5em;
+    border-radius: 1em;
+    margin: .2em;
+    font-size: 15px;
+    color:#3a2653;
+    background-color: whitesmoke;
+  }
+
+  hr {
+    display: block;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 1px;
+  }
+  .section {
+    border-style: solid;
+    border-radius: 2em;
+    padding: .2em;
+    margin: 1em;
+    border-color: #4f5179;
+    text-align: center;
+  }
