@@ -1,11 +1,14 @@
-from app import app
-from flask import render_template, redirect, request
 import datetime
-import users, books
+from flask import render_template, redirect, request
+from app import app
+import users
+import books
+
 
 @app.route("/")
 def index():
     return render_template("index.html", books=books.get_all_books())
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -18,12 +21,14 @@ def login():
         if not users.login(username, password):
             return render_template("error.html", error="Väärä käyttäjätunnus tai salasana")
 
-        return redirect("/")
+    return redirect("/")
+
 
 @app.route("/logout")
 def logout():
     users.logout()
     return redirect("/")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -32,20 +37,19 @@ def register():
 
     if request.method == "POST":
         username = request.form["username"]
-        
+
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
             return render_template("error.html", error="Salasanat eroavat")
-        
+
         role = request.form["role"]
         if role not in ("0", "1"):
             return render_template("error.html", error="Tuntematon käyttäjärooli")
 
         if users.register(username, password1, role):
             return redirect("/")
-        else:
-            return render_template("error.html", error="Rekisteröinti epäonnistui")
+    return render_template("error.html", error="Rekisteröinti epäonnistui")
 
 
 @app.route("/book/<int:book_id>")
@@ -54,16 +58,14 @@ def show_book(book_id):
 
     loan_info = books.get_loans_info(int(book_id))
 
-    if loan_info is None:
-        borrowable = True
-    else:
-        borrowable = False
+    borrowable = loan_info is None
 
     reviews = books.get_reviews(int(book_id))
 
-    return render_template("book.html", id=details[0], name=details[1], 
-    author=details[2], year=details[3], genre=details[4], loan_info=loan_info,
-    borrowable=borrowable, reviews=reviews)
+    return render_template("book.html", id=details[0], name=details[1],
+                           author=details[2], year=details[3], genre=details[4],
+                           loan_info=loan_info, borrowable=borrowable, reviews=reviews)
+
 
 @app.route("/add", methods=["GET", "POST"])
 def add_book():
@@ -82,8 +84,9 @@ def add_book():
 
         if books.add_book(name, author, int(year), genre):
             return redirect("/")
-        else:
-            return render_template("error.html", error="Jokin meni pieleen")
+
+    return render_template("error.html", error="Jokin meni pieleen")
+
 
 @app.route("/remove", methods=["POST"])
 def remove_book():
@@ -93,8 +96,9 @@ def remove_book():
 
     if books.remove_book(int(book_id)):
         return "<p>Kirjan poistaminen onnistui. </p><a href='/'>Palaa etusivulle</a>"
-    else:
-        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
 
 @app.route("/bookwish", methods=["GET", "POST"])
 def wish_for_book():
@@ -115,14 +119,15 @@ def wish_for_book():
 
         if books.wish_for_book(users.get_current_user(), name, author):
             return "<p>Toive tallennettu! </p><a href='/'>Palaa etusivulle</a>"
-        else:
-            return render_template("error.html", error="Jokin meni pieleen")
+
+    return render_template("error.html", error="Jokin meni pieleen")
+
 
 @app.route("/search", methods=["GET", "POST"])
 def search_book():
     # needs to be updated so that the letter case doesn't matter
     if request.method == "GET":
-            return render_template("search.html")
+        return render_template("search.html")
 
     if request.method == "POST":
 
@@ -144,7 +149,8 @@ def search_book():
             results = books.search_books_by_genre(query)
             return render_template("result.html", results=results)
 
-        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
 
 @app.route("/review", methods=["POST"])
 def give_review():
@@ -164,13 +170,15 @@ def give_review():
 
     if books.add_review(int(book_id), users.get_current_user(), score, comment):
         return redirect(f"/book/{str(book_id)}")
-    else:
-        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
 
 @app.route("/book-wishes")
 def show_book_wishes():
     users.require_role(1)
-    return render_template("book_wishes.html", wishes = books.get_wishes())
+    return render_template("book_wishes.html", wishes=books.get_wishes())
+
 
 @app.route("/borrow", methods=["POST"])
 def borrow_book():
@@ -182,8 +190,9 @@ def borrow_book():
 
     if books.borrow_book(int(book_id), users.get_current_user(), str(date)):
         return redirect(f"/book/{str(book_id)}")
-    else:
-        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
 
 @app.route("/return", methods=["POST"])
 def return_book():
@@ -194,8 +203,9 @@ def return_book():
 
     if books.return_book(int(book_id)):
         return redirect(f"/book/{str(book_id)}")
-    else:
-        return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
+    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+
 
 @app.route("/loans")
 def show_loans():
