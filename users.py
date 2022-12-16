@@ -1,15 +1,17 @@
 import secrets
-from db import db
 from flask import session, abort, request
 from werkzeug.security import check_password_hash, generate_password_hash
+from db import db
+
 
 def register(username, password, role):
     hash_value = generate_password_hash(password)
 
     try:
-        sql = """INSERT INTO users (username, password, role) 
+        sql = """INSERT INTO users (username, password, role)
                  VALUES (:username, :password, :role)"""
-        db.session.execute(sql, {"username":username, "password":hash_value, "role":role})
+        db.session.execute(
+            sql, {"username": username, "password": hash_value, "role": role})
         db.session.commit()
     except:
         return False
@@ -18,7 +20,7 @@ def register(username, password, role):
 
 def login(username, password):
     sql = "SELECT id, username, password, role FROM users WHERE username=:username"
-    result = db.session.execute(sql, {"username":username})
+    result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
 
     if user is None:
@@ -31,18 +33,22 @@ def login(username, password):
     session["user_role"] = user[3]
     session["csrf_token"] = secrets.token_hex(16)
     return True
-    
+
+
 def logout():
     del session["user_id"]
     del session["username"]
     del session["user_role"]
 
+
 def get_current_user():
     return session["user_id"]
+
 
 def require_role(role):
     if role != session["user_role"]:
         abort(403)
+
 
 def check_csrf():
     if session["csrf_token"] != request.form["csrf_token"]:
