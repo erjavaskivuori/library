@@ -3,13 +3,10 @@
 
 <h3>Kaikki lainassa olevat kirjat: </h3>
 <p>
-{% for loan in loans %}
-Kirja: {{  loan[1]  }}, {{  loan[2]  }}<br>
-Kirjan on lainannut: {{  loan[0]  }}<br>
+    {% for loan in loans %}
+    Kirja: {{ loan[1] }}, {{ loan[2] }}<br>
+    Kirjan on lainannut: {{ loan[0] }}<br>
 </p>
 {% endfor %}
-
-<br>
-<a href="/">Palaa etusivulle</a>
 
 {% endblock %}

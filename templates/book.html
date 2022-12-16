@@ -1,86 +1,103 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2><i>{{ name }}</i></h2>
-<p>
-<b>{{ author }}</b><br>
-{{ year }}, {{ genre }}
-{{ loan }}
-</p>
+<body>
+    <div class="section">
+        <h2><i>{{ name }}</i></h2>
+        <h3>{{ author }}</h3>
+        <p>
+            Julkaisuvuosi: {{ year }}<br>
+            Genre: {{ genre }}
+        </p>
+    </div>
 
-{% if borrowable and session.user_role == 0 %}
-<p>
-Kirja on lainattavissa.
-<form action="/borrow" method="post">
-<input type="hidden" name="book_id" value="{{ id }}">
-<input type="submit" value="Lainaa kirja">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</p>
-</form>
+    {% if borrowable and session.user_role == 0 %}
+    <div class="section">
+        <p>
+            Kirja on lainattavissa.
+        <form action="/borrow" method="post">
+            <input type="hidden" name="book_id" value="{{ id }}">
+            <input type="submit" value="Lainaa kirja">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </p>
+        </form>
+    </div>
 
-{% elif loan_info[1] == session.user_id %}
-Olet lainannut tämän kirjan.
-<p>
-<form action="/return" method="post">
-<input type="hidden" name="book_id" value="{{ id }}">
-<input type="submit" value="Palauta kirja">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</p>
-</form>
+    {% elif session.username and loan_info[1] == session.user_id %}
+    <div class="section">
+        Olet lainannut tämän kirjan.
+        <p>
+        <form action="/return" method="post">
+            <input type="hidden" name="book_id" value="{{ id }}">
+            <input type="submit" value="Palauta kirja">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </p>
+        </form>
+    </div>
 
-{% elif session.user_role == 0 %}
-<p>Kirja ei ole lainattavissa. Odota kirjan palautumista.</p>
+    {% elif session.user_role == 0 %}
+    <div class="section">
+        <p>Kirja ei ole lainattavissa. Odota kirjan palautumista.</p>
+    </div>
+    {% endif %}
 
-{% endif %}
+    {% if reviews %}
+    <div class="section">
+        <h2>Arvostelut:</h2>
 
-{% if reviews %}
-<h4>Arvostelut:</h4>
-{% endif %}
+        {% for review in reviews %}
+        <p>
+            <b>{{ review[0] }}</b> {{ review[1] }}/5:<br>
+            "{{ review[2] }}"
+            <br>
+        </p>
+        {% endfor %}
+        <br>
+    </div>
+    {% endif %}
 
-{% for review in reviews %}
-<p>
-<b>{{  review[0]  }}</b> {{  review[1]  }}/5:<br>
-"{{  review[2]  }}"
-<br>
-</p>
-{% endfor %}
+    {% if session.username %}
+    <div class="section">
+        <h2>Anna kirjalle arvio</h2>
 
-{% if session.username %}
-<h4>Anna kirjalle arvio</h4>
+        <form action="/review" method="post">
+            <p>
+                Anna kommentti: <br>
+                <textarea name="comment" rows="4" cols="40" minlength="1" maxlength="1000"></textarea>
 
-<form action="/review" method="post">
-<p>
-Anna kommentti: <br>
-Kommentin pituus enintään 1000 merkkiä <br>
-<textarea name="comment" rows="4" cols="40" minlength="1" maxlength="1000"></textarea>
-</p>
+            <p>
+                Anna pisteet:
+                <select name="score">
+                    <option value=1> 1
+                    <option value=2> 2
+                    <option value=3> 3
+                    <option value=4> 4
+                    <option value=5> 5
+                </select>
+            <p>
+                <input type="submit" value="Lähetä arvostelu">
+                <input type="hidden" name="book_id" value="{{ id }}">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+    </div>
+    {% endif %}
 
-<p>Anna pisteet:
-<select name="score">
-<option value=1> 1
-<option value=2> 2
-<option value=3> 3
-<option value=4> 4
-<option value=5> 5
-</select>
-<p>
-<input type="submit" value="Lähetä arvostelu">
-<input type="hidden" name="book_id" value="{{ id }}">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</form>
-{% endif %}
 
-{% if session.user_role == 1 %}
-Kirjastonhoitajana voit poistaa kirjan.<br>
-<form action="/remove" method="post">
-<input type="hidden" name="book_id" value="{{ id }}">
-<input type="submit" value="Poista kirja">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-</p>
-</form>
-{% endif %}
+    <br>
 
-<br>
-<a href="/">Palaa etusivulle</a>
+    <div class="center-txt">
+        {% if session.user_role == 1 %}
+        <p>
+            Kirjastonhoitajana voit poistaa kirjan<br>
+        <form action="/remove" method="post">
+            <input type="hidden" name="book_id" value="{{ id }}">
+            <input type="submit" value="Poista kirja">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+        </p>
+        {% endif %}
+    </div>
+
+</body>
 
 {% endblock %}

@@ -1,5 +1,42 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="/static/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kirjasto</title>
-<h1>Kirjasto</h1>
-<hr>
+
+<a href="/">
+    <img src="/static/kirjasto_logo.png" alt="Kirjaston logo" class="center-img">
+</a>
+
+<nav>
+    <ul>
+        {% if session.username %}
+        <li>
+            <div class="dropdown">
+                <button class="dropbtn">≡ Valikko
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    {% if session.user_role == 0 %}
+                    <a href="/bookwish">Toivo uutta kirjaa</a>
+                    {% endif %}
+
+                    {% if session.user_role == 1 %}
+                    <a href="/add">Lisää uusi kirja</a>
+                    <a href="/book-wishes">Katsele kirjatoiveita</a>
+                    <a href="/loans">Katsele lainassa olevia kirjoja</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+        <li><a href="/">Etusivu</a></li>
+        <li><a href="/search">Etsi kirjaa</a></li>
+        {% if session.username %}
+        <li><a href="/logout">Kirjaudu ulos</a></li>
+        {% else %}
+        <li><a href="/login">Kirjaudu sisään</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<br>
 {% block content %}{% endblock %}

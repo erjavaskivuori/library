@@ -1,43 +1,50 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<h2>Etusivu</h2>
+<div class="books">
+    {% if session.user_role == 0 %}
+    <h3>Hei {{ session.username }}!</h3>
 
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<a href="/logout">Kirjaudu ulos</a>
-{% else %}
-<p>Et ole kirjautunut.</p><a href="/login">Kirjaudu sisään</a>
+    <p>
+        Tervetuloa kirjastoon. Kaikki kirjaston kirjat löydät
+        alla olevasta luettelosta, mutta voit myös käyttää hakutoimintoa
+        kirjojen etsimiseen. Lainaa kirjoja ja jätä niille
+        halutessasi palautetta! Mikäli kirjastosta puuttuu etsimäsi kirja,
+        kerro toiveesi meille, niin lisäämme kirjan valikoimaan.
+    </p>
 
-{% endif %}
-<br>
+    {% elif session.user_role == 1 %}
+    <h3>Hei {{ session.username }}!</h3>
 
-<h3>Kirjastossa olevat kirjat: </h3>
-<a href="/search">Etsi kirjaa</a>
-<p>
-<br>
-{% for book in books %}
-<a href="/book/{{ book.id }}"><i>{{ book.name }}</i>, {{ book.author }}<br></a>
-</p>
-{% endfor %}
+    <p>
+        Olet kirjautunut kirjastonhoitajana. Kirjastonhoitajana sinulla on
+        mahdollisuus lisätä ja poistaa kirjoja. Muistathan tarkkailla
+        toivelistaa, jotta voimme tarjota kirjaston käyttäjille mahdollisimman
+        paljon mukavaa luettavaa! Halutessasi voit itsekin tutustua
+        kirjavalikoimaan ja antaa kirjoille arvosteluita.
+    </p>
 
-<br>
-{% if session.user_role == 0 %}
-<h3>Käyttäjän toiminnot</h3>
-<ul>
-    <li> <a href="/bookwish">Toivo uutta kirjaa</a>
-</ul>
+    {% else %}
 
-{% endif %}
+    <h3>Hei!</h3>
 
-<br>
-{% if session.user_role == 1 %}
-<h3>Kirjastonhoitajan toiminnot</h3>
-<ul>
-    <li> <a href="/add">Lisää uusi kirja</a>
-    <li> <a href="/book-wishes">Katsele kirjatoiveita</a>
-    <li> <a href="/loans">Katsele lainassa olevia kirjoja</a>
-</ul>
+    <p>
+        Tervetuloa kirjastoon. Kaikki kirjaston kirjat löydät
+        alla olevasta luettelosta, mutta voit myös käyttää hakutoimintoa
+        kirjojen etsimiseen. Kirjaudu sisään tai luo uusi käyttäjä, jotta voit
+        lainata kirjoja, antaa kirjoille arvosteluita ja toivoa valikoimaamme
+        uusia kirjoja!
+    </p>
 
-{% endif %}
+    {% endif %}
+
+    <br>
+
+    <h2>Kirjastossa olevat kirjat: </h2>
+    <p>
+        {% for book in books %}
+        <a href="/book/{{ book.id }}"><i>{{ book.name }}</i><br>{{ book.author }}<br></a>
+    </p>
+    {% endfor %}
+</div>
 {% endblock %}

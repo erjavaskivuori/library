@@ -5,17 +5,16 @@
 
 <form action="/bookwish" method="post">
 
-<p>Kirjan nimi:<br>
-<input type="text" name="name" minlength="1"></p>
+    <p>Kirjan nimi:<br>
+        <input type="text" name="name" minlength="1">
+    </p>
 
-<p>Kirjailijan nimi:<br>
-<input type="text" name="author" minlength="1"></p>
+    <p>Kirjailijan nimi:<br>
+        <input type="text" name="author" minlength="1">
+    </p>
 
-<input type="submit" value="Toivo kirjaa">
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="submit" value="Toivo kirjaa">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
-
-<p>
-<a href="/">Palaa etusivulle</a>
 
 {% endblock %}

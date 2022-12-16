@@ -5,25 +5,26 @@
 
 <form action="/add" method="post">
 
-<p>Kirjan nimi:<br>
-<input type="text" name="name" minlength="1" maxlength="50"></p>
+    <p>Kirjan nimi:<br>
+        <input type="text" name="name" minlength="1" maxlength="50">
+    </p>
 
-<p>Kirjailijan nimi:<br>
-<input type="text" name="author" minlength="1" maxlength="50"></p>
+    <p>Kirjailijan nimi:<br>
+        <input type="text" name="author" minlength="1" maxlength="50">
+    </p>
 
-<p>Kirjan julkaisuvuosi:<br>
-<input type="text" name="year" minlength="4" maxlength="4"></p>
+    <p>Kirjan julkaisuvuosi:<br>
+        <input type="text" name="year" minlength="4" maxlength="4">
+    </p>
 
-<p>Kirjan genre:<br>
-<input type="text" name="genre" minlength="1"></p>
+    <p>Kirjan genre:<br>
+        <input type="text" name="genre" minlength="1">
+    </p>
 
-<input type="submit" value="Lisää kirja">
+    <input type="submit" value="Lisää kirja">
 
-<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 
 </form>
-
-<p>
-<a href="/">Palaa etusivulle</a></p>
 
 {% endblock %}
