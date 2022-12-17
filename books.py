@@ -21,13 +21,13 @@ def order_books(order):
 
 def search_books_by_name(name):
     sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible = 'True' AND name LIKE :name"""
+             WHERE visible = 'True' AND name ILIKE :name"""
     return db.session.execute(sql, {"name": "%"+name+"%"}).fetchall()
 
 
 def search_books_by_author(author):
     sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible = 'True' AND author LIKE :author"""
+             WHERE visible = 'True' AND author ILIKE :author"""
     return db.session.execute(sql, {"author": "%"+author+"%"}).fetchall()
 
 
@@ -39,8 +39,8 @@ def search_books_by_year(year):
 
 def search_books_by_genre(genre):
     sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible = 'True' AND genre=:genre"""
-    return db.session.execute(sql, {"genre": genre}).fetchall()
+             WHERE visible = 'True' AND genre ILIKE :genre"""
+    return db.session.execute(sql, {"genre": "%"+genre+"%"}).fetchall()
 
 
 def add_book(name, author, year, genre):
@@ -96,30 +96,3 @@ def get_reviews(book_id):
     sql = """SELECT username, score, comment FROM users INNER JOIN reviews
             ON users.id=user_id AND book_id=:book_id"""
     return db.session.execute(sql, {"book_id": book_id}).fetchall()
-
-
-def borrow_book(book_id, user_id, date):
-    sql = """INSERT INTO loans (book_id, user_id, date)
-            VALUES (:book_id, :user_id, :date)"""
-    db.session.execute(
-        sql, {"book_id": book_id, "user_id": user_id, "date": date})
-    db.session.commit()
-    return True
-
-
-def return_book(book_id):
-    sql = "DELETE FROM loans WHERE book_id=:book_id"
-    db.session.execute(sql, {"book_id": book_id})
-    db.session.commit()
-    return True
-
-
-def get_loans_info(book_id):
-    sql = "SELECT * FROM loans WHERE book_id=:book_id"
-    return db.session.execute(sql, {"book_id": book_id}).fetchone()
-
-
-def get_all_loans():
-    sql = """SELECT username, name, author FROM users INNER JOIN loans ON users.id=user_id
-            INNER JOIN books ON books.id=book_id"""
-    return db.session.execute(sql).fetchall()
