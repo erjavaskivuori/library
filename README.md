@@ -22,7 +22,8 @@ Kirjaston työntekijä voi:
 - Nähdä kirjatoiveet ja toiveen esittäjän käyttäjänimen
 - Nähdä lainassa olevat kirjat ja lainaajan käyttäjänimen
 
-Sovellusta voi testata seuraavien ohjeiden avulla:
+
+### Sovellusta voi testata seuraavien ohjeiden avulla:
 
 1. Kloonaa repositorio
 
