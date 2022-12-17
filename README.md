@@ -1,8 +1,8 @@
 ## Kirjasto
 
-Ideanani on luoda tietokantasovellus kirjaston käyttämiseen ja hallintaan. 
+Tietokantasovellukseni on luotu kirjaston käyttämiseen ja hallintaan.
 
-Tähän mennessä on toteutettu seuraavat toiminallisuudet:
+Sovelluksella on seuraavat toiminallisuudet:
 
 Kuka tahansa sivulla voi:
 - Nähdä kaikki kirjastossa olevat kirjat
@@ -22,6 +22,37 @@ Kirjaston työntekijä voi:
 - Nähdä kirjatoiveet ja toiveen esittäjän käyttäjänimen
 - Nähdä lainassa olevat kirjat ja lainaajan käyttäjänimen
 
-Jatkossa on tarkoitus toteuttaa vielä:
-- Paremman ulkoasun kehittäminen
-- Testaaminen tuotannossa
+Sovellusta voi testata seuraavien ohjeiden avulla:
+
+1. Kloonaa repositorio
+
+2. Luo repositorioon .env-tiedosto, johon lisäät seuraavat muuttujat:
+
+´´´
+DATABASE_URL=postgresql:///user     # user tilalle oma psql-käyttäjänimi
+SECRET_KEY=                         # luo oma secret key
+´´´
+
+3. Luo ´schema.sql´ mukaiset taulut komennolla:
+
+´´´
+psql < schema.sql
+´´´
+
+4. Asenna vaadittavat riippuvuudet komennolla:
+
+´´´
+pip install requirements.txt
+´´´
+
+5. Aktivoi virtuaaliympäristö komennolla:
+
+´´´
+source venv/bin/activate
+´´´
+
+6. Käynnistä sovellus komennolla:
+
+´´´
+flask run
+´´´
