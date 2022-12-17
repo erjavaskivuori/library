@@ -39,15 +39,20 @@ psql < schema.sql
 
 4. Asenna vaadittavat riippuvuudet komennolla:
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
-5. Aktivoi virtuaaliympäristö komennolla:
+5. Luo hakemistoon virtuaaliympäristö komennolla:
+```
+python3 -m venv venv
+```
+
+6. Aktivoi virtuaaliympäristö komennolla:
 ```
 source venv/bin/activate
 ```
 
-6. Käynnistä sovellus komennolla:
+7. Käynnistä sovellus komennolla:
 ```
 flask run
 ```
