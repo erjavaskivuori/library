@@ -106,9 +106,10 @@
 
   form input, select, textarea {
     padding: .5em;
-    border-radius: 1em;
+    border-radius: .7em;
     margin: .2em;
     font-size: 15px;
+    text-align: center;
     color:#3a2653;
     background-color: whitesmoke;
   }
