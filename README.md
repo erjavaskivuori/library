@@ -27,7 +27,7 @@ Kirjaston työntekijä voi:
 
 1. Kloonaa repositorio
 
-2. Luo repositorioon .env-tiedosto, johon lisäät seuraavat muuttujat:
+2. Luo hakemistoon .env-tiedosto, johon lisäät seuraavat muuttujat:
 ```
 DATABASE_URL=postgresql:///user     # user tilalle oma psql-käyttäjänimi
 SECRET_KEY=                         # luo oma secret key
