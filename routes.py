@@ -125,7 +125,6 @@ def wish_for_book():
 
 @app.route("/search", methods=["GET", "POST"])
 def search_book():
-    # needs to be updated so that the letter case doesn't matter
     if request.method == "GET":
         return render_template("search.html")
 
