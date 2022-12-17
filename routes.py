@@ -55,18 +55,24 @@ def register():
 
 @app.route("/book/<int:book_id>")
 def show_book(book_id):
+
     details = books.get_book_details(int(book_id))
+    visible = details[5]
 
-    loan_info = bookloans.get_loans_info(int(book_id))
+    if visible:
 
-    borrowable = loan_info is None
+        loan_info = bookloans.get_loans_info(int(book_id))
 
-    reviews = books.get_reviews(int(book_id))
+        borrowable = loan_info is None
 
-    return render_template("book.html", id=details[0], name=details[1],
-                           author=details[2], year=details[3], genre=details[4],
-                           loan_info=loan_info, borrowable=borrowable, reviews=reviews)
+        reviews = books.get_reviews(int(book_id))
 
+        return render_template("book.html", id=details[0], name=details[1],
+                            author=details[2], year=details[3], genre=details[4],
+                            loan_info=loan_info, borrowable=borrowable, reviews=reviews)
+
+    return render_template("error.html", 
+                        error="Sinulla ei ole pääsyoikeutta tälle sivulle")
 
 @app.route("/add", methods=["GET", "POST"])
 def add_book():
