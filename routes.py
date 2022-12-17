@@ -3,6 +3,7 @@ from flask import render_template, redirect, request
 from app import app
 import users
 import books
+import bookloans
 
 
 @app.route("/")
@@ -56,7 +57,7 @@ def register():
 def show_book(book_id):
     details = books.get_book_details(int(book_id))
 
-    loan_info = books.get_loans_info(int(book_id))
+    loan_info = bookloans.get_loans_info(int(book_id))
 
     borrowable = loan_info is None
 
@@ -187,7 +188,7 @@ def borrow_book():
     book_id = request.form["book_id"]
     date = datetime.date.today()
 
-    if books.borrow_book(int(book_id), users.get_current_user(), str(date)):
+    if bookloans.borrow_book(int(book_id), users.get_current_user(), str(date)):
         return redirect(f"/book/{str(book_id)}")
 
     return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
@@ -200,7 +201,7 @@ def return_book():
 
     book_id = request.form["book_id"]
 
-    if books.return_book(int(book_id)):
+    if bookloans.return_book(int(book_id)):
         return redirect(f"/book/{str(book_id)}")
 
     return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
@@ -209,4 +210,4 @@ def return_book():
 @app.route("/loans")
 def show_loans():
     users.require_role(1)
-    return render_template("loans.html", loans=books.get_all_loans())
+    return render_template("loans.html", loans=bookloans.get_all_loans())
