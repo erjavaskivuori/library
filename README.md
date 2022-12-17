@@ -27,32 +27,27 @@ Sovellusta voi testata seuraavien ohjeiden avulla:
 1. Kloonaa repositorio
 
 2. Luo repositorioon .env-tiedosto, johon lisäät seuraavat muuttujat:
-
 ´´´
 DATABASE_URL=postgresql:///user     # user tilalle oma psql-käyttäjänimi
 SECRET_KEY=                         # luo oma secret key
 ´´´
 
 3. Luo ´schema.sql´ mukaiset taulut komennolla:
-
 ´´´
 psql < schema.sql
 ´´´
 
 4. Asenna vaadittavat riippuvuudet komennolla:
-
 ´´´
 pip install requirements.txt
 ´´´
 
 5. Aktivoi virtuaaliympäristö komennolla:
-
 ´´´
 source venv/bin/activate
 ´´´
 
 6. Käynnistä sovellus komennolla:
-
 ´´´
 flask run
 ´´´
