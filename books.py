@@ -8,15 +8,8 @@ def get_all_books():
 
 
 def get_book_details(book_id):
-    sql = """SELECT id, name, author, year, genre FROM books
-             WHERE id=:id"""
+    sql = "SELECT * FROM books WHERE id=:id"
     return db.session.execute(sql, {"id": book_id}).fetchone()
-
-
-def order_books(order):
-    sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible='True' ORDER BY %s"""
-    return db.session.execute(sql, {order}).fetchall()
 
 
 def search_books_by_name(name):
