@@ -70,7 +70,7 @@ def show_book(book_id):
     details = books.get_book_details(int(book_id))
     visible = details[5]
 
-    if visible:
+    if visible or users.get_current_user()[2] == 1:
 
         loan_info = bookloans.get_loans_info(int(book_id))
 
