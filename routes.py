@@ -137,7 +137,7 @@ def search_book():
     if request.method == "POST":
 
         search_type = request.form["search_type"]
-        if search_type not in [0, 1, 2, 3]:
+        if search_type not in ["0", "1", "2", "3"]:
             return render_template("message.html", message="Tuntematon hakuperuste.")
         if search_type == "0":
             query = request.form["query"]
