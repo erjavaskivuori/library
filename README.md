@@ -15,12 +15,15 @@ Käyttäjä voi:
 - Lainata ja palauttaa kirjoja
 - Antaa arvosteluja kirjoille
 - Toivoa uusia kirjoja
+- Katsella oman profiilin kautta omia lainauksia
+- Poistaa oman käyttäjän, jolloin poistuu myös käyttäjän antamat arvostelut, lainaukset ja kirjatoiveet
 
 Kirjaston työntekijä voi:
 - Antaa arvosteluja kirjoille
 - Lisätä ja poistaa kirjoja
 - Nähdä kirjatoiveet ja toiveen esittäjän käyttäjänimen
 - Nähdä lainassa olevat kirjat ja lainaajan käyttäjänimen
+- Poistaa oman käyttäjän, jolloin poistuu myös käyttäjän antamat arvostelut
 
 
 ### Sovellusta voi testata seuraavien ohjeiden avulla:
