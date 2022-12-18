@@ -79,8 +79,9 @@ def show_book(book_id):
         reviews = books.get_reviews(int(book_id))
 
         return render_template("book.html", id=details[0], name=details[1],
-                            author=details[2], year=details[3], genre=details[4],
-                            loan_info=loan_info, borrowable=borrowable, reviews=reviews)
+                            author=details[2], year=details[3], genre=details[4], 
+                            visible=visible,loan_info=loan_info, 
+                            borrowable=borrowable, reviews=reviews)
 
     return render_template("message.html", 
                         message="Tämä kirja on poistettu valikoimasta!")
@@ -260,3 +261,22 @@ def return_book():
 def show_loans():
     users.require_role(1)
     return render_template("loans.html", loans=bookloans.get_all_loans())
+
+@app.route("/user/<int:user_id>", methods=["GET", "POST"])
+def show_profile(user_id):
+
+    if request.method == "GET":
+        user = users.get_current_user()
+        loans = bookloans.get_users_loans(user[0])
+
+        return render_template("user.html", loans=loans)
+
+    if request.method == "POST":
+        users.check_csrf()
+        user_id = request.form["user_id"]
+
+        if users.remove_user(int(user_id)):
+            users.logout()
+            return render_template("message.html", message="Käyttäjä poistettu.")
+
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
