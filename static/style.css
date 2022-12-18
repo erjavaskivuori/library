@@ -20,7 +20,7 @@
     width: 100%;
   }
 
-  .center-txt {
+  .center-txt, .books {
     text-align: center;
   }
 
@@ -84,10 +84,6 @@
     float: left;
   }
 
-  .books {
-    text-align: center;
-  }
-
   .books a {
     display: inline-block;
     padding: .5em 5em;
@@ -112,6 +108,7 @@
     text-align: center;
     color:#3a2653;
     background-color: whitesmoke;
+    border-width: 0;
   }
 
   hr {
