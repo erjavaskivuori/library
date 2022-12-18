@@ -4,12 +4,14 @@
 <h2>Kirjaudu sisään</h2>
 
 <form action="/login" method="post">
-    <p>Käyttäjätunnus: <br><input type="text" name="username"></p>
-    <p>Salasana: <br><input type="password" name="password"></p>
+    <p>
+        Käyttäjätunnus: <br><input type="text" name="username" minlength="3" maxlength="20"><br>
+        Salasana: <br><input type="password" name="password" minlength="3" maxlength="30">
+    </p>
 
     <input type="submit" value="Kirjaudu">
 </form>
 
-<p>Ei käyttäjätunnusta? Rekisteröidy <a href="/register">täällä</a>!</p>
+<p>Ei käyttäjätunnusta? Rekisteröidy <a href="/register"><u>täällä</u></a>!</p>
 
 {% endblock %}
