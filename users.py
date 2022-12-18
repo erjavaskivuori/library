@@ -45,8 +45,23 @@ def get_current_user():
     return [session["user_id"], session["username"], session["user_role"]]
 
 def remove_user(user_id):
+    sql = """DELETE FROM loans WHERE user_id=:user_id"""
+    db.session.execute(sql, {"user_id": user_id})
+    db.session.commit()
+
+    sql = """DELETE FROM reviews WHERE user_id=:user_id"""
+    db.session.execute(sql, {"user_id": user_id})
+    db.session.commit()
+
+    sql = """DELETE FROM wishlist WHERE user_id=:user_id"""
+    db.session.execute(sql, {"user_id": user_id})
+    db.session.commit()
+
     sql = "DELETE FROM users WHERE id=:id"
     db.session.execute(sql, {"id": user_id})
+    db.session.commit()
+    
+    return True
 
 def require_role(role):
     if role != session["user_role"]:
