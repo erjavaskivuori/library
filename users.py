@@ -42,8 +42,7 @@ def logout():
 
 
 def get_current_user():
-    return session["user_id"]
-
+    return [session["user_id"], session["username"], session["user_role"]]
 
 def require_role(role):
     if role != session["user_role"]:

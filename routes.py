@@ -160,7 +160,7 @@ def wish_for_book():
                 return render_template("message.html", message="""Nimet voivat sisältää vain kirjaimia, 
                                     numeroita ja seuraavia merkkejä: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~""")
 
-        if books.wish_for_book(users.get_current_user(), name, author):
+        if books.wish_for_book(users.get_current_user()[0], name, author):
             return render_template("message.html", message="Toiveen tallentaminen onnistui!")
 
     return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
@@ -217,7 +217,7 @@ def give_review():
                 return render_template("message.html", message="""Kommentti voi sisältää vain kirjaimia, 
                                     numeroita ja seuraavia merkkejä: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~""")
 
-    if books.add_review(int(book_id), users.get_current_user(), score, comment):
+    if books.add_review(int(book_id), users.get_current_user()[0], score, comment):
         return redirect(f"/book/{str(book_id)}")
 
     return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
@@ -237,7 +237,7 @@ def borrow_book():
     book_id = request.form["book_id"]
     date = datetime.date.today()
 
-    if bookloans.borrow_book(int(book_id), users.get_current_user(), str(date)):
+    if bookloans.borrow_book(int(book_id), users.get_current_user()[0], str(date)):
         return redirect(f"/book/{str(book_id)}")
 
     return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
