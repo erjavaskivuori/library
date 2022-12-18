@@ -20,7 +20,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         if not users.login(username, password):
-            return render_template("error.html", error="Väärä käyttäjätunnus tai salasana")
+            return render_template("message.html", message="Väärä käyttäjätunnus tai salasana!")
 
     return redirect("/")
 
@@ -42,16 +42,16 @@ def register():
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
-            return render_template("error.html", error="Salasanat eroavat")
+            return render_template("message.html", message="Salasanat eroavat.")
 
         role = request.form["role"]
         if role not in ("0", "1"):
-            return render_template("error.html", error="Tuntematon käyttäjärooli")
+            return render_template("message.html", message="Tuntematon käyttäjärooli.")
 
         if users.register(username, password1, role):
             return redirect("/")
             
-    return render_template("error.html", error="Rekisteröinti epäonnistui")
+    return render_template("message.html", message="Rekisteröinti epäonnistui.")
 
 
 @app.route("/book/<int:book_id>")
@@ -72,8 +72,8 @@ def show_book(book_id):
                             author=details[2], year=details[3], genre=details[4],
                             loan_info=loan_info, borrowable=borrowable, reviews=reviews)
 
-    return render_template("error.html", 
-                        error="Sinulla ei ole pääsyoikeutta tälle sivulle")
+    return render_template("message.html", 
+                        message="Sinulla ei ole pääsyoikeutta tälle sivulle!")
 
 @app.route("/add", methods=["GET", "POST"])
 def add_book():
@@ -93,7 +93,7 @@ def add_book():
         if books.add_book(name, author, int(year), genre):
             return redirect("/")
 
-    return render_template("error.html", error="Jokin meni pieleen")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/remove", methods=["POST"])
@@ -103,9 +103,9 @@ def remove_book():
     book_id = request.form["book_id"]
 
     if books.remove_book(int(book_id)):
-        return "<p>Kirjan poistaminen onnistui. </p><a href='/'>Palaa etusivulle</a>"
+        return render_template("message.html", message="Kirjan poistaminen onnistui!")
 
-    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/bookwish", methods=["GET", "POST"])
@@ -121,12 +121,12 @@ def wish_for_book():
         name = request.form["name"]
         author = request.form["author"]
         if name == "" or author == "":
-            return render_template("error.html", error="Nimi on tyhjä")
+            return render_template("message.html", message="Anna kirjan ja kirjailijan nimi.")
 
         if books.wish_for_book(users.get_current_user(), name, author):
-            return "<p>Toive tallennettu! </p><a href='/'>Palaa etusivulle</a>"
+            return render_template("message.html", message="Toiveen tallentaminen onnistui!")
 
-    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -138,7 +138,7 @@ def search_book():
 
         search_type = request.form["search_type"]
         if search_type not in [0, 1, 2, 3]:
-            return render_template("error.html", error="Tuntematon hakuperuste.")
+            return render_template("message.html", message="Tuntematon hakuperuste.")
         if search_type == "0":
             query = request.form["query"]
             results = books.search_books_by_name(query)
@@ -156,7 +156,7 @@ def search_book():
             results = books.search_books_by_genre(query)
             return render_template("result.html", results=results)
 
-    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/review", methods=["POST"])
@@ -167,18 +167,18 @@ def give_review():
 
     score = int(request.form["score"])
     if score < 1 or score > 5:
-        return render_template("error.html", error="Tuntematon pistemäärä. Valitse 1-5.")
+        return render_template("message.html", message="Tuntematon pistemäärä. Valitse 1-5.")
 
     comment = request.form["comment"]
     if len(comment) < 1:
-        return render_template("error.html", error="Anna kommentti")
+        return render_template("message.html", message="Anna kommentti.")
     if len(comment) > 1000:
-        return render_template("error.html", error="Antamasi kommentti on liian pitkä.")
+        return render_template("message.html", message="Antamasi kommentti on liian pitkä.")
 
     if books.add_review(int(book_id), users.get_current_user(), score, comment):
         return redirect(f"/book/{str(book_id)}")
 
-    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/book-wishes")
@@ -198,7 +198,7 @@ def borrow_book():
     if bookloans.borrow_book(int(book_id), users.get_current_user(), str(date)):
         return redirect(f"/book/{str(book_id)}")
 
-    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/return", methods=["POST"])
@@ -211,7 +211,7 @@ def return_book():
     if bookloans.return_book(int(book_id)):
         return redirect(f"/book/{str(book_id)}")
 
-    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/loans")
