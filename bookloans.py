@@ -28,6 +28,6 @@ def get_loans_info(book_id):
 
 
 def get_all_loans():
-    sql = """SELECT username, name, author FROM users INNER JOIN loans ON users.id=user_id
+    sql = """SELECT username, name, author, date FROM users INNER JOIN loans ON users.id=user_id
             INNER JOIN books ON books.id=book_id"""
     return db.session.execute(sql).fetchall()
