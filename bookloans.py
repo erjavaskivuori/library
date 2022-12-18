@@ -18,7 +18,8 @@ def return_book(book_id):
 
 
 def get_users_loans(user_id):
-    sql = "SELECT * FROM loans WHERE user_id=:user_id"
+    sql = """SELECT book_id, name, author, date FROM loans INNER JOIN books
+        ON books.id=book_id AND user_id=:user_id"""
     return db.session.execute(sql, {"user_id": user_id}).fetchall()
 
 
