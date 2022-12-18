@@ -86,7 +86,7 @@
     <br>
 
     <div class="center-txt">
-        {% if session.user_role == 1 %}
+        {% if session.user_role == 1 and visible == t %}
         <p>
             Kirjastonhoitajana voit poistaa kirjan<br>
         <form action="/remove" method="post">
