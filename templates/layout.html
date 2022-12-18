@@ -17,10 +17,12 @@
                 </button>
                 <div class="dropdown-content">
                     {% if session.user_role == 0 %}
+                    <a href="/user/{{ session.user_id }}">Oma profiili</a>
                     <a href="/bookwish">Toivo uutta kirjaa</a>
                     {% endif %}
 
                     {% if session.user_role == 1 %}
+                    <a href="/user/{{ session.user_id }}">Oma profiili</a>
                     <a href="/add">Lisää uusi kirja</a>
                     <a href="/book-wishes">Katsele kirjatoiveita</a>
                     <a href="/loans">Katsele lainassa olevia kirjoja</a>
