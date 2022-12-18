@@ -50,6 +50,7 @@ def register():
 
         if users.register(username, password1, role):
             return redirect("/")
+            
     return render_template("error.html", error="Rekisteröinti epäonnistui")
 
 
@@ -118,16 +119,14 @@ def wish_for_book():
         users.check_csrf()
 
         name = request.form["name"]
-        if name == "":
-            return render_template("error.html", error="Nimi on tyhjä")
         author = request.form["author"]
-        if author == "":
+        if name == "" or author == "":
             return render_template("error.html", error="Nimi on tyhjä")
 
         if books.wish_for_book(users.get_current_user(), name, author):
             return "<p>Toive tallennettu! </p><a href='/'>Palaa etusivulle</a>"
 
-    return render_template("error.html", error="Jokin meni pieleen")
+    return render_template("error.html", error="Jokin meni pieleen. Yritä uudelleen.")
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -138,6 +137,8 @@ def search_book():
     if request.method == "POST":
 
         search_type = request.form["search_type"]
+        if search_type not in [0, 1, 2, 3]:
+            return render_template("error.html", error="Tuntematon hakuperuste.")
         if search_type == "0":
             query = request.form["query"]
             results = books.search_books_by_name(query)
