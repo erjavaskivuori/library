@@ -1,4 +1,5 @@
 import datetime
+from string import ascii_letters, digits, printable
 from flask import render_template, redirect, request
 from app import app
 import users
@@ -38,11 +39,20 @@ def register():
 
     if request.method == "POST":
         username = request.form["username"]
+        for i in username:
+            if i not in ascii_letters+digits+"åöäÅÖÄ":
+                return render_template("message.html", message="""Käyttäjänimi voi sisältää vain 
+                                    kirjaimia ja numeroita.""")
 
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         if password1 != password2:
             return render_template("message.html", message="Salasanat eroavat.")
+
+        for i in password1:
+            if i not in ascii_letters+digits+"!?-_,.:;=+åöäÅÖÄ":
+                return render_template("message.html", message="""Salasana voi sisältää vain
+                                    kirjaimia, numeroita ja seuraavia merkkejä: !?-_,.:;=+""")
 
         role = request.form["role"]
         if role not in ("0", "1"):
@@ -90,6 +100,11 @@ def add_book():
         year = request.form["year"]
         genre = request.form["genre"]
 
+        for i in name + author + genre:
+            if i not in printable+"ÅÄÖåäö":
+                return render_template("message.html", message="""Syötteet voivat sisältää vain kirjaimia, 
+                                    numeroita ja seuraavia merkkejä: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~""")
+
         if books.add_book(name, author, int(year), genre):
             return redirect("/")
 
@@ -122,6 +137,11 @@ def wish_for_book():
         author = request.form["author"]
         if name == "" or author == "":
             return render_template("message.html", message="Anna kirjan ja kirjailijan nimi.")
+
+        for i in name + author:
+            if i not in printable+"åöäÅÖÄ":
+                return render_template("message.html", message="""Nimet voivat sisältää vain kirjaimia, 
+                                    numeroita ja seuraavia merkkejä: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~""")
 
         if books.wish_for_book(users.get_current_user(), name, author):
             return render_template("message.html", message="Toiveen tallentaminen onnistui!")
@@ -174,6 +194,11 @@ def give_review():
         return render_template("message.html", message="Anna kommentti.")
     if len(comment) > 1000:
         return render_template("message.html", message="Antamasi kommentti on liian pitkä.")
+
+    for i in comment:
+        if i not in printable+"ÅÄÖåäö":
+                return render_template("message.html", message="""Kommentti voi sisältää vain kirjaimia, 
+                                    numeroita ja seuraavia merkkejä: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~""")
 
     if books.add_review(int(book_id), users.get_current_user(), score, comment):
         return redirect(f"/book/{str(book_id)}")
