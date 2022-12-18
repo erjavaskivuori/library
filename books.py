@@ -2,8 +2,7 @@ from db import db
 
 
 def get_all_books():
-    sql = """SELECT id, name, author, year, genre FROM books
-             WHERE visible='True'"""
+    sql = "SELECT * FROM books WHERE visible='True'"
     return db.session.execute(sql).fetchall()
 
 
