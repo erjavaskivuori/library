@@ -44,6 +44,10 @@ def logout():
 def get_current_user():
     return [session["user_id"], session["username"], session["user_role"]]
 
+def remove_user(user_id):
+    sql = "DELETE FROM users WHERE id=:id"
+    db.session.execute(sql, {"id": user_id})
+
 def require_role(role):
     if role != session["user_role"]:
         abort(403)
