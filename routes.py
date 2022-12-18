@@ -83,7 +83,7 @@ def show_book(book_id):
                             loan_info=loan_info, borrowable=borrowable, reviews=reviews)
 
     return render_template("message.html", 
-                        message="Sinulla ei ole pääsyoikeutta tälle sivulle!")
+                        message="Tämä kirja on poistettu valikoimasta!")
 
 @app.route("/add", methods=["GET", "POST"])
 def add_book():
