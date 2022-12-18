@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>{{ session.username }}</h1>
+
+{% if session.user_role == 0 %}
+<p>
+    Käytät kirjastoa tavallisena käyttäjänä. 
+</p>
+
+{% elif session.user_role == 1 %}
+<p>
+    Käytät kirjastoa kirjastonhoitajana.
+</p>
+{% endif %}
+
+{% if loans %}
+<h2>Lainaamasi kirjat: </h2>
+<p>
+    Voit palauttaa kirjan siirtymällä kirjan omalle sivulle.<br>
+    {% for loan in loans %}
+    <div class="section">
+        <br>
+        <a href="/book/{{ loan[0] }}"><u><i>{{ loan[1] }}</i></u><br>{{ loan[2] }}</a><br>
+        Lainattu: {{ loan[3] }}
+        <br><br>
+    </div>
+</p>
+{% endfor %}
+{% endif %}
+
+<p>
+    Voit halutessasi poistaa käyttäjäsi. <br>
+    <b>Tämän jälkeen käyttäjääsi ei voida enää palauttaa.</b><br>
+<form action="/user/{{ session.user_id }}" method="post">
+    <input type="hidden" name="user_id" value="{{ session.user_id }}">
+    <input type="submit" value="Poista käyttäjä">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+</p>
+
+{% endblock %}

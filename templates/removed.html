@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<p>
+    Tällä sivulla on listattu kaikki valikoimastamme poistetut kirjat.
+    Voit palauttaa kirjan valikoimaan klikkaamalla valitun kirjan kohdalla "Palauta 
+    valikoimaan" -painiketta.
+</p>
+
+<h2>Valikoimasta poistetut kirjat: </h2>
+<p>
+    {% for book in removed_books %}
+    <div class="section">
+        <br>
+        <a href="/book/{{ book.id }}"><u><i>{{ book.name }}</i></u><br>{{ book.author }}</a>
+        <form action="/removed" method="post">
+            <input type="hidden" name="book_id" value="{{ book.id }}">
+            <input type="submit" value="Palauta valikoimaan">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        </form>
+        <br>
+    </div>
+</p>
+{% endfor %}
+
+{% endblock %}
