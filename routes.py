@@ -122,6 +122,23 @@ def remove_book():
 
     return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
 
+@app.route("/removed", methods=["GET", "POST"])
+def removed_books():
+    users.require_role(1)
+
+    if request.method == "GET":
+        return render_template("removed.html", removed_books=books.get_removed_books())
+
+    if request.method == "POST":
+        users.check_csrf()
+
+        book_id = request.form["book_id"]
+
+        if books.restore_book(book_id):
+            return render_template("message.html", message="Kirjan palauttaminen onnistui!")
+    
+    return render_template("message.html", message="Jokin meni pieleen. Yritä uudelleen.")
+
 
 @app.route("/bookwish", methods=["GET", "POST"])
 def wish_for_book():
