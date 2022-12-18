@@ -50,12 +50,23 @@ def add_book(name, author, year, genre):
 
 
 def remove_book(book_id):
-    sql = """UPDATE books SET visible='FALSE' WHERE id=:id"""
+    sql = """UPDATE books SET visible='False' WHERE id=:id"""
     db.session.execute(sql, {"id": book_id})
     db.session.commit()
 
     return True
 
+def get_removed_books():
+    sql = """SELECT id, name, author, year, genre FROM books
+             WHERE visible='False'"""
+    return db.session.execute(sql).fetchall()
+
+def restore_book(book_id):
+    sql = """UPDATE books SET visible='True' WHERE id=:id"""
+    db.session.execute(sql, {"id": book_id})
+    db.session.commit()
+
+    return True
 
 def wish_for_book(user_id, name, author):
     sql = """INSERT INTO wishlist (user_id, name, author)
