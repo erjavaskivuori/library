@@ -1,4 +1,8 @@
-## Kirjasto
+## Kirjasto / Library
+
+[Link to the app](https://tsoha-library-8f8482201604.herokuapp.com/)
+
+App only in Finnish for now.
 
 Tietokantasovellukseni on luotu kirjaston käyttämiseen ja hallintaan.
 
